@@ -25,10 +25,10 @@ public class Interfaz2 extends javax.swing.JFrame {
     public Interfaz2() {
         initComponents();
 
-        Date date = parsearFecha("2020-05-01");
+        Date date = parsearFecha("2025-05-01");
 
         try {
-            CRUD.update(1, "jose", date, "Dennis Villasssss",'X',1205);
+            CRUD.create( "hola", date, "Ruben",'X',105);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -21,23 +21,23 @@ public class CRUD {
 //    Connection conn = DB.conectar();
     private static PreparedStatement statement;
     
-    // Método para crear una nueva película en la base de datos
-    public static void create(int id, String name, Date dateLaunch, String director, char category, int duration) throws SQLException {
+    // Método para crear una nueva película en la base de datos//*DONE */
+    public static void create(String name, Date dateLaunch, String director, char category, int duration) throws SQLException {
         Connection conexion = DB.conectar(); // Utiliza el método estático conectar de la clase DB
-        String query = "INSERT INTO peliculas (id, nombre, fecha_lanzamiento, director, categoria, duracion) VALUES (?, ?, ?, ?, ?, ?)";
         
-        PreparedStatement preparedStatement = conexion.prepareStatement(query);
-        preparedStatement.setInt(1, id);
-        preparedStatement.setString(2, name);
-        preparedStatement.setDate(3, new java.sql.Date(dateLaunch.getTime())); // Convierte java.util.Date a java.sql.Date
-        preparedStatement.setString(4, director);
-        preparedStatement.setString(5, String.valueOf(category)); // Convierte char a String
-        preparedStatement.setInt(6, duration);
+        PreparedStatement preparedStatement = conexion.prepareStatement("INSERT INTO peliculas ( name, dateLaunch, director, category, duration) VALUES (?, ?, ?, ?, ?)");
+        preparedStatement.setString(1, name);
+
+
+        preparedStatement.setDate(2, new java.sql.Date(dateLaunch.getTime())); // Convierte java.util.Date a java.sql.Date
+        preparedStatement.setString(3, director);
+        preparedStatement.setString(4, String.valueOf(category)); // Convierte char a String
+        preparedStatement.setInt(5, duration);
         
         int filasInsertadas = preparedStatement.executeUpdate();
 
         if (filasInsertadas > 0) {
-            System.out.println("Se creó la película con el ID " + id + " correctamente.");
+            System.out.println("Se creó la película correctamente.");
         } else {
             System.out.println("No se pudo crear la película.");
         }
