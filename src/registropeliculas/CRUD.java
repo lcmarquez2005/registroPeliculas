@@ -68,15 +68,14 @@ public class CRUD {
             System.out.println("ha habido un error con el formato de fecha\n\n");
             System.out.println(e);
         }
-
-
+        
         st.setString(3,director);
         st.setString(4, String.valueOf(category) );//no existe el metodo tipo setChar, asi que parseamos nuestro Char a un String para ser insertado en la DB
         st.setInt(5,duration);
         st.setInt(6,id);
 
         int filasActualizadas = st.executeUpdate();
-        if(filasActualizadas >0) {
+        if( filasActualizadas > 0) {
             System.out.println("Se ha actualizado correctamente" + filasActualizadas + "registros..");
         } else {
             System.out.println("No se logro actualizar ninguna pelicula con el ID" + id);
