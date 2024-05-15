@@ -76,10 +76,8 @@ public class CRUD {
 
         st.close();
         DB.close();
-
     }
     
-
 
 
     // Método para eliminar una película por su ID
@@ -102,8 +100,6 @@ public class CRUD {
         st.close();
         DB.close();
     }
-
-    
     
 
 
@@ -125,8 +121,6 @@ public class CRUD {
         DB.close();
     }
     
-
-
 
 
 
@@ -167,10 +161,4 @@ public class CRUD {
         resultado.close();
         DB.close();
     }
-
-
-
-
-
-
 }
