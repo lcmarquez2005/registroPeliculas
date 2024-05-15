@@ -28,7 +28,7 @@ public class Interfaz2 extends javax.swing.JFrame {
         Date date = parsearFecha("2025-05-01");
 
         try {
-            CRUD.create( "hola", date, "Ruben",'X',105);
+            CRUD.read(2);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -219,6 +219,9 @@ public class Interfaz2 extends javax.swing.JFrame {
         }
         return dateLaunch;
     }
+
+
+
     /**
      * @param args the command line arguments
      */
