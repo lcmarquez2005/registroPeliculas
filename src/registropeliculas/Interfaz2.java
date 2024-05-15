@@ -28,7 +28,7 @@ public class Interfaz2 extends javax.swing.JFrame {
         Date date = parsearFecha("2025-05-01");
 
         try {
-            CRUD.read(2);
+            CRUD.delete(4);
         } catch (SQLException e) {
             e.printStackTrace();
         }
