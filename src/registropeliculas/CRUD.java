@@ -124,7 +124,6 @@ public class CRUD {
 
 
 
-
     //*DONE */
 // Método para leer los datos de una película por su ID
     public static void read(int id) throws SQLException {
