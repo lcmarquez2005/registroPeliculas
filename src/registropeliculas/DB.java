@@ -18,7 +18,7 @@ public class DB {
     //y funciones que se requieran
     private static final String URL = "jdbc:mysql://localhost:3306/peliculas-tap";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
+    private static final String PASSWORD = "77pacman2004";
     private static Connection conexion;
 
     // Método para establecer la conexión
