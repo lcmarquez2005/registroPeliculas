@@ -24,6 +24,7 @@ import java.util.Date;
  */
 public class Interfaz2 extends javax.swing.JFrame {
 
+    int idToDeleted;
     /**
      * Creates new form Interfaz2
      */
@@ -81,8 +82,18 @@ public class Interfaz2 extends javax.swing.JFrame {
         jLabel6.setText("Duration");
 
         jButton1.setText("Add");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Delete");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Edit");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -230,12 +241,14 @@ public class Interfaz2 extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1FocusGained
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        int row = jTable1.rowAtPoint(evt.getPoint());
-        row = row+1;
-        System.out.println("Clicked row: " + row);
+        int selected = jTable1.getSelectedRow();
+        int id = (Integer)  (jTable1.getValueAt(selected, 0));
+        System.out.println("Clicked id: " + id);
+
         //Ahora cada vez que se haga click rellenaremos los campos textfields, de la interfaz, conla info de la fila seleccionada
         try {
-            CRUD.read(row);
+            CRUD.read(id);
+            idToDeleted = CRUD.idPelicula;
             jTextField1.setText( CRUD.name);
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -255,7 +268,7 @@ public class Interfaz2 extends javax.swing.JFrame {
         String fecha = jTextField2.getText();
         Date fechaParseada = parsearFecha(fecha);
         char category = parsearCategory(jTextField4.getText());
-        if (category != ' ') {
+        if (category == ' ') {
             JOptionPane.showMessageDialog(null, "La categoria debe ser 1 solo caracter");
             return;
         }
@@ -275,6 +288,9 @@ public class Interfaz2 extends javax.swing.JFrame {
             
     }//GEN-LAST:event_jButton3ActionPerformed
 
+
+
+
     public char parsearCategory(String str) {
         char category = ' ';
 
@@ -286,21 +302,23 @@ public class Interfaz2 extends javax.swing.JFrame {
         return category;
     }    
 
-    
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed                                      
         // Obtener el ID ingresado por el usuario
-    int id = Integer.parseInt(jTextField8.getText());
-    
-    try {
-        CRUD.delete(id);
-        // Actualizar la tabla después de eliminar la película
-        CRUD.fillTableFromDB(jTable1);
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Error al eliminar la película: " + ex.getMessage());
-    }
-    } 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        int id = (idToDeleted);
+
+        try {
+            CRUD.delete(id);
+            // Actualizar la tabla después de eliminar la película
+            CRUD.fillTableFromDB(jTable1);
+            //reseteamos el id
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al eliminar la película: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+                 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                                                               
         // Obtener los valores de los campos de texto
     String name = jTextField1.getText();
     String dateString = jTextField2.getText();
@@ -311,6 +329,7 @@ public class Interfaz2 extends javax.swing.JFrame {
     
     try {
         CRUD.create(name, dateLaunch, director, category.charAt(0), duration);
+        JOptionPane.showMessageDialog(null, "Creada correctamente");
         // Actualizar la tabla después de agregar la película
         CRUD.fillTableFromDB(jTable1);
     } catch (SQLException ex) {
@@ -333,7 +352,7 @@ public class Interfaz2 extends javax.swing.JFrame {
             return dateLaunch;
         }
         return dateLaunch;
-    }
+    }                                        
 
 
 
