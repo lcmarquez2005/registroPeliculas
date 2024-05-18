@@ -211,6 +211,37 @@ public class Interfaz2 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // Obtener el ID ingresado por el usuario
+    int id = Integer.parseInt(jTextField8.getText());
+    
+    try {
+        CRUD.delete(id);
+        // Actualizar la tabla después de eliminar la película
+        CRUD.fillTableFromDB(jTable1);
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error al eliminar la película: " + ex.getMessage());
+    }
+    } 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // Obtener los valores de los campos de texto
+    String name = jTextField1.getText();
+    String dateString = jTextField2.getText();
+    Date dateLaunch = parsearFecha(dateString);
+    String director = jTextField3.getText();
+    String category = jTextField4.getText();
+    int duration = Integer.parseInt(jTextField5.getText());
+    
+    try {
+        CRUD.create(name, dateLaunch, director, category.charAt(0), duration);
+        // Actualizar la tabla después de agregar la película
+        CRUD.fillTableFromDB(jTable1);
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error al crear la película: " + ex.getMessage());
+    }
+    }   
     public Date parsearFecha(String prueba) {
         // Obtener la fecha ingresada por el usuario
         // String dateString = jTextField4.getText();
