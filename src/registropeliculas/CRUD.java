@@ -8,6 +8,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,7 +52,7 @@ public class CRUD {
     
 
 
-
+    
     //*update DONEEEEEEEEEEEEEEEEE */
     //just left to change the parsing, to not be that bad
     public static void update(int id, String name, Date dateLaunch, String director, char category, int duration) 
@@ -80,6 +83,7 @@ public class CRUD {
     
 
 
+    //*DONE */
     // Método para eliminar una película por su ID
     public static void delete(int id) 
     throws SQLException {
@@ -104,7 +108,7 @@ public class CRUD {
 
 
 
-
+    //*DONE */
     public static void consultarDatos() throws SQLException {
         Connection conexion = DB.conectar();
         String consulta = "SELECT * FROM peliculas";
@@ -159,6 +163,47 @@ public class CRUD {
 
         resultado.close();
         DB.close();
+    }
+    
+    // Método para llenar una JTable con datos de una base de datos
+    public static void fillTableFromDB(JTable table) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0); // Limpiar la tabla antes de agregar nuevos datos
+
+        try {
+            // Establecer la conexión a la base de datos
+            Connection connection = DB.conectar(); // Reemplaza esto con tu método para conectar a la base de datos
+
+            // Consulta SQL para seleccionar todos los registros de la tabla 'peliculas'
+            String query = "SELECT * FROM peliculas"; 
+
+            // Crear la declaración PreparedStatement
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            // Ejecutar la consulta y obtener el resultado
+            ResultSet resultSet = statement.executeQuery();
+
+            // Iterar sobre el resultado y agregar cada fila a la tabla
+            while (resultSet.next()) {
+                Object[] row = new Object[] {
+                    resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getDate("dateLaunch"),
+                    resultSet.getString("director"),
+                    resultSet.getString("category"),
+                    resultSet.getInt("duration")
+                };
+                model.addRow(row); // Agregar la fila al modelo de la tabla
+            }
+
+            // Cerrar recursos
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            // Manejar cualquier excepción de SQL aquí
+        }
     }
 
 }

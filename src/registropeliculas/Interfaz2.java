@@ -7,7 +7,12 @@ package registropeliculas;
 import java.text.SimpleDateFormat;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,11 +32,7 @@ public class Interfaz2 extends javax.swing.JFrame {
 
         Date date = parsearFecha("2025-05-01");
 
-        try {
-            CRUD.delete(4);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        CRUD.fillTableFromDB(jTable1);
     }
 
     /**
@@ -202,7 +203,7 @@ public class Interfaz2 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
+    
     public Date parsearFecha(String prueba) {
         // Obtener la fecha ingresada por el usuario
         // String dateString = jTextField4.getText();
