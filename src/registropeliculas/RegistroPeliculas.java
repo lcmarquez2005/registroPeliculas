@@ -14,10 +14,10 @@ public class RegistroPeliculas {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Interfaz v1 = new Interfaz();
+        // Interfaz v1 = new Interfaz();
         Interfaz2 v2 = new Interfaz2();
         v2.setVisible(true);
-        v1.setVisible(true);
+        // v1.setVisible(true);
     }
     
 }

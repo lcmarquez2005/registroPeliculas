@@ -85,6 +85,11 @@ public class Interfaz2 extends javax.swing.JFrame {
         jButton2.setText("Delete");
 
         jButton3.setText("Edit");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -163,7 +168,7 @@ public class Interfaz2 extends javax.swing.JFrame {
                 java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                true, true, true, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -172,6 +177,16 @@ public class Interfaz2 extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTable1FocusGained(evt);
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -209,6 +224,67 @@ public class Interfaz2 extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTable1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable1FocusGained
+
+    }//GEN-LAST:event_jTable1FocusGained
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int row = jTable1.rowAtPoint(evt.getPoint());
+        row = row+1;
+        System.out.println("Clicked row: " + row);
+        //Ahora cada vez que se haga click rellenaremos los campos textfields, de la interfaz, conla info de la fila seleccionada
+        try {
+            CRUD.read(row);
+            jTextField1.setText( CRUD.name);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            jTextField2.setText( dateFormat.format( CRUD.dateLaunch) );
+            jTextField3.setText( CRUD.director);
+            jTextField4.setText( CRUD.category);
+            jTextField5.setText(""+ CRUD.duration);
+            
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        int id = CRUD.idPelicula;
+        String fecha = jTextField2.getText();
+        Date fechaParseada = parsearFecha(fecha);
+        char category = parsearCategory(jTextField4.getText());
+        if (category != ' ') {
+            JOptionPane.showMessageDialog(null, "La categoria debe ser 1 solo caracter");
+            return;
+        }
+        
+        try {
+            CRUD.update(id, jTextField1.getText(), fechaParseada,  jTextField3.getText(),category,Integer.parseInt( jTextField5.getText() ));
+            CRUD.fillTableFromDB(jTable1);
+            JOptionPane.showMessageDialog(null, "El registro con el id = "+ id+ "se ha actualizado correctamente");
+        } catch (NumberFormatException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+            
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    public char parsearCategory(String str) {
+        char category = ' ';
+
+        if (str.length() != 1) {
+            return ' ';
+        }
+        category = str.charAt(0);
+
+        return category;
+    }    
 
     
     public Date parsearFecha(String prueba) {

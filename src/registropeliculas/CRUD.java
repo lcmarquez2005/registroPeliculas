@@ -23,6 +23,12 @@ public class CRUD {
 //    luego aqui van todas las funciones principales, create,read,update,delete
 //    Connection conn = DB.conectar();
     private static PreparedStatement statement;
+    public static int idPelicula;
+    public static String name;
+    public static Date dateLaunch;
+    public static String director;
+    public static String category;
+    public static int duration ;
     
     // Método para crear una nueva película en la base de datos//*DONE */
     public static void create(String name, Date dateLaunch, String director, char category, int duration) 
@@ -142,12 +148,12 @@ public class CRUD {
         // Verificar si se encontraron resultados
         if (resultado.next()) {
             // Leer los datos de la película
-            int idPelicula = resultado.getInt("id");
-            String name = resultado.getString("name");
-            Date dateLaunch = resultado.getDate("dateLaunch");
-            String director = resultado.getString("director");
-            String category = resultado.getString("category");
-            int duration = resultado.getInt("duration");
+            idPelicula = resultado.getInt("id");
+            name = resultado.getString("name");
+            dateLaunch = resultado.getDate("dateLaunch");
+            director = resultado.getString("director");
+            category = resultado.getString("category");
+            duration = resultado.getInt("duration");
             // Leer más columnas si es necesario
 
             // Imprimir los datos de la película
