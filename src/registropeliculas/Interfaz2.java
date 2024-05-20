@@ -31,8 +31,6 @@ public class Interfaz2 extends javax.swing.JFrame {
     public Interfaz2() {
         initComponents();
 
-        Date date = parsearFecha("2025-05-01");
-
         CRUD.fillTableFromDB(jTable1);
     }
 
@@ -275,6 +273,10 @@ public class Interfaz2 extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+            
+        if( !comprobarCampos() ) {
+            return;
+        }
         int id = CRUD.idPelicula;
         String fecha = jTextField2.getText();
         Date fechaParseada = parsearFecha(fecha);
@@ -325,6 +327,11 @@ public class Interfaz2 extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                                                               
         // Obtener el ID ingresado por el usuario
+            
+        if( !comprobarCampos() ) {
+            return;
+        }
+        
         int id = (idToDeleted);
 
         try {
@@ -339,7 +346,12 @@ public class Interfaz2 extends javax.swing.JFrame {
     }                                        
                  
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                                                               
-        // Obtener los valores de los campos de texto
+    //Agregar    
+    
+    if( !comprobarCampos() ) {
+        return;
+    }
+    // Obtener los valores de los campos de texto
     String name = jTextField1.getText();
     String dateString = jTextField2.getText();
     Date dateLaunch = parsearFecha(dateString);
@@ -356,7 +368,23 @@ public class Interfaz2 extends javax.swing.JFrame {
         ex.printStackTrace();
         JOptionPane.showMessageDialog(null, "Error al crear la película: " + ex.getMessage());
     }
-    }   
+    }  
+    
+    public boolean comprobarCampos() {
+        if(
+            "".equals(jTextField1.getText()) ||
+            "".equals(jTextField2.getText()) ||
+            "".equals(jTextField3.getText())||
+            "".equals(jTextField4.getText())||
+            "".equals(jTextField5.getText()
+                )
+        ) {
+            JOptionPane.showMessageDialog(null, "Los Campos estan Vacios");
+            return false;
+        }  
+        return true;
+    }
+    
     public Date parsearFecha(String prueba) {
         // Obtener la fecha ingresada por el usuario
         // String dateString = jTextField4.getText();
